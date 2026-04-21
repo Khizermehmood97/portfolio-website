@@ -1,4 +1,4 @@
-import { useEffect, type ComponentType } from 'react'
+import { useEffect, type ComponentType, type JSX } from 'react'
 import { Link } from 'react-router-dom'
 import { motion, useAnimation } from 'framer-motion'
 import type { Variants } from 'framer-motion'
@@ -217,7 +217,7 @@ export default function Hero() {
                 key={name}
                 className="flex items-center gap-1.5 px-3 py-1.5 bg-slate-800/80 border border-slate-700 rounded-full hover:border-slate-500 transition-colors"
               >
-                <Icon size={14} style={{ color }} />
+                <span style={{ color, display: 'flex' }}><Icon size={14} /></span>
                 <span className="text-xs font-medium text-slate-300">{name}</span>
               </span>
             ))}
