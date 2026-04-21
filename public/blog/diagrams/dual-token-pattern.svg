@@ -1,0 +1,132 @@
+<svg width="900" height="580" xmlns="http://www.w3.org/2000/svg" font-family="'Segoe UI', Inter, system-ui, sans-serif">
+  <defs>
+    <linearGradient id="bgGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#f8faff"/>
+      <stop offset="100%" stop-color="#eef2ff"/>
+    </linearGradient>
+    <linearGradient id="clientGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#3b82f6"/>
+      <stop offset="100%" stop-color="#2563eb"/>
+    </linearGradient>
+    <linearGradient id="serverGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#8b5cf6"/>
+      <stop offset="100%" stop-color="#7c3aed"/>
+    </linearGradient>
+    <linearGradient id="memGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#10b981"/>
+      <stop offset="100%" stop-color="#059669"/>
+    </linearGradient>
+    <linearGradient id="cookieGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#f59e0b"/>
+      <stop offset="100%" stop-color="#d97706"/>
+    </linearGradient>
+    <marker id="arrowBlue" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#2563eb"/>
+    </marker>
+    <marker id="arrowPurple" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#7c3aed"/>
+    </marker>
+    <marker id="arrowGreen" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#059669"/>
+    </marker>
+    <filter id="shadow">
+      <feDropShadow dx="0" dy="2" stdDeviation="4" flood-color="#94a3b8" flood-opacity="0.25"/>
+    </filter>
+    <filter id="shadowSm">
+      <feDropShadow dx="0" dy="1" stdDeviation="2" flood-color="#94a3b8" flood-opacity="0.2"/>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="900" height="580" fill="url(#bgGrad)" rx="16"/>
+  <rect x="1" y="1" width="898" height="578" fill="none" stroke="#c7d2fe" stroke-width="1.5" rx="16"/>
+
+  <!-- Title -->
+  <rect x="185" y="16" width="530" height="40" rx="10" fill="#ede9fe" filter="url(#shadowSm)"/>
+  <text x="450" y="42" text-anchor="middle" fill="#5b21b6" font-size="15" font-weight="700" letter-spacing="0.5">RECOMMENDED DUAL-TOKEN STORAGE PATTERN</text>
+
+  <!-- ── ACTOR BOXES ── -->
+  <!-- SPA / Browser -->
+  <rect x="14" y="78" width="180" height="72" rx="12" fill="url(#clientGrad)" filter="url(#shadow)"/>
+  <rect x="28" y="90" width="28" height="19" rx="3" fill="white" opacity="0.25"/>
+  <rect x="28" y="107" width="28" height="4" rx="1" fill="white" opacity="0.35"/>
+  <line x1="42" y1="111" x2="42" y2="116" stroke="white" stroke-width="2" opacity="0.5"/>
+  <line x1="36" y1="116" x2="48" y2="116" stroke="white" stroke-width="2" opacity="0.5"/>
+  <text x="68" y="98" fill="white" font-size="13" font-weight="700">Browser / SPA</text>
+  <text x="68" y="114" fill="#bfdbfe" font-size="11">Access token in memory</text>
+  <text x="68" y="130" fill="#dbeafe" font-size="10">Refresh token in HttpOnly cookie</text>
+
+  <!-- Server -->
+  <rect x="660" y="78" width="210" height="72" rx="12" fill="url(#serverGrad)" filter="url(#shadow)"/>
+  <rect x="674" y="90" width="28" height="5" rx="2" fill="white" opacity="0.3"/>
+  <rect x="674" y="99" width="28" height="5" rx="2" fill="white" opacity="0.3"/>
+  <rect x="674" y="108" width="28" height="5" rx="2" fill="white" opacity="0.3"/>
+  <circle cx="705" cy="92.5" r="3" fill="#86efac"/>
+  <circle cx="705" cy="101.5" r="3" fill="#86efac"/>
+  <circle cx="705" cy="110.5" r="3" fill="#fbbf24"/>
+  <text x="720" y="100" fill="white" font-size="13" font-weight="700">Auth + Resource Server</text>
+  <text x="720" y="116" fill="#e9d5ff" font-size="11">Issues &amp; validates tokens</text>
+  <text x="720" y="131" fill="#ddd6fe" font-size="10">Manages refresh token in DB</text>
+
+  <!-- ── LIFELINES ── -->
+  <line x1="104" y1="150" x2="104" y2="530" stroke="#93c5fd" stroke-width="1.5" stroke-dasharray="6,5" opacity="0.6"/>
+  <line x1="765" y1="150" x2="765" y2="530" stroke="#c4b5fd" stroke-width="1.5" stroke-dasharray="6,5" opacity="0.6"/>
+
+  <!-- ── STEP 1 — Login ── -->
+  <circle cx="104" cy="164" r="14" fill="#2563eb" filter="url(#shadowSm)"/>
+  <text x="104" y="169" text-anchor="middle" fill="white" font-size="12" font-weight="700">1</text>
+  <line x1="119" y1="178" x2="751" y2="178" stroke="#2563eb" stroke-width="2" marker-end="url(#arrowBlue)"/>
+  <rect x="308" y="162" width="232" height="20" rx="5" fill="white" filter="url(#shadowSm)" opacity="0.9"/>
+  <text x="424" y="177" text-anchor="middle" fill="#1d4ed8" font-size="12" font-weight="600">POST /auth/login { email, password }</text>
+
+  <!-- ── STEP 2 — Server response with both tokens ── -->
+  <circle cx="752" cy="210" r="14" fill="#7c3aed" filter="url(#shadowSm)"/>
+  <text x="752" y="215" text-anchor="middle" fill="white" font-size="12" font-weight="700">2</text>
+  <!-- response box -->
+  <rect x="480" y="202" width="266" height="64" rx="8" fill="#f5f3ff" stroke="#c4b5fd" stroke-width="1.5"/>
+  <text x="613" y="220" text-anchor="middle" fill="#5b21b6" font-size="11" font-weight="700">Server generates both tokens:</text>
+  <!-- Green pill: access token -->
+  <rect x="492" y="227" width="238" height="18" rx="6" fill="#dcfce7" stroke="#86efac" stroke-width="1"/>
+  <text x="611" y="239" text-anchor="middle" fill="#166534" font-size="10" font-weight="600">accessToken — 15 min JWT — in response body</text>
+  <!-- Amber pill: refresh token -->
+  <rect x="492" y="248" width="238" height="18" rx="6" fill="#fef3c7" stroke="#fcd34d" stroke-width="1"/>
+  <text x="611" y="260" text-anchor="middle" fill="#92400e" font-size="10" font-weight="600">refreshToken — 30 day — Set-Cookie: HttpOnly; Secure</text>
+
+  <line x1="751" y1="276" x2="120" y2="294" stroke="#7c3aed" stroke-width="2" stroke-dasharray="7,4" marker-end="url(#arrowPurple)"/>
+  <rect x="310" y="278" width="214" height="20" rx="5" fill="white" filter="url(#shadowSm)" opacity="0.9"/>
+  <text x="417" y="293" text-anchor="middle" fill="#6d28d9" font-size="11" font-weight="600">200 OK { accessToken } + HttpOnly cookie</text>
+
+  <!-- Client storage annotation -->
+  <rect x="14" y="308" width="245" height="52" rx="8" fill="white" stroke="#c7d2fe" stroke-width="1.5" filter="url(#shadowSm)"/>
+  <rect x="14" y="308" width="6" height="52" rx="3" fill="#10b981"/>
+  <text x="34" y="325" fill="#065f46" font-size="10" font-weight="700">Access token → JS memory (React state)</text>
+  <text x="34" y="341" fill="#059669" font-size="10">Lost on page refresh · XSS-safe · No persistent storage</text>
+  <text x="34" y="355" fill="#d97706" font-size="10" font-weight="700">Refresh token → HttpOnly cookie (browser only)</text>
+
+  <!-- ── STEP 3 — Protected API call ── -->
+  <circle cx="104" cy="380" r="14" fill="#2563eb" filter="url(#shadowSm)"/>
+  <text x="104" y="385" text-anchor="middle" fill="white" font-size="12" font-weight="700">3</text>
+  <line x1="119" y1="394" x2="751" y2="394" stroke="#2563eb" stroke-width="2" marker-end="url(#arrowBlue)"/>
+  <rect x="258" y="378" width="284" height="20" rx="5" fill="white" filter="url(#shadowSm)" opacity="0.9"/>
+  <text x="400" y="393" text-anchor="middle" fill="#1d4ed8" font-size="12" font-weight="600">GET /api/data · Authorization: Bearer &lt;accessToken&gt;</text>
+  <line x1="752" y1="408" x2="120" y2="420" stroke="#7c3aed" stroke-width="2" stroke-dasharray="7,4" marker-end="url(#arrowPurple)"/>
+  <rect x="258" y="408" width="276" height="20" rx="5" fill="white" filter="url(#shadowSm)" opacity="0.9"/>
+  <text x="396" y="423" text-anchor="middle" fill="#6d28d9" font-size="12" font-weight="600">200 OK { data } · Verify JWT signature only — no DB</text>
+
+  <!-- ── STEP 4 — Silent refresh ── -->
+  <circle cx="104" cy="446" r="14" fill="#2563eb" filter="url(#shadowSm)"/>
+  <text x="104" y="451" text-anchor="middle" fill="white" font-size="12" font-weight="700">4</text>
+  <line x1="119" y1="460" x2="751" y2="460" stroke="#2563eb" stroke-width="2" marker-end="url(#arrowBlue)"/>
+  <rect x="220" y="444" width="354" height="20" rx="5" fill="#fef9c3" stroke="#fcd34d" stroke-width="1" filter="url(#shadowSm)"/>
+  <text x="397" y="459" text-anchor="middle" fill="#92400e" font-size="12" font-weight="600">POST /auth/refresh · [HttpOnly cookie auto-sent by browser]</text>
+  <line x1="752" y1="474" x2="120" y2="486" stroke="#7c3aed" stroke-width="2" stroke-dasharray="7,4" marker-end="url(#arrowPurple)"/>
+  <rect x="242" y="475" width="316" height="20" rx="5" fill="white" filter="url(#shadowSm)" opacity="0.9"/>
+  <text x="400" y="490" text-anchor="middle" fill="#6d28d9" font-size="12" font-weight="600">200 OK { accessToken } + rotated refreshToken cookie</text>
+
+  <!-- ── KEY NOTE ── -->
+  <rect x="30" y="516" width="840" height="52" rx="10" fill="white" filter="url(#shadow)"/>
+  <rect x="30" y="516" width="7" height="52" rx="4" fill="#3b82f6"/>
+  <text x="52" y="535" fill="#1d4ed8" font-size="11" font-weight="700">GOLD STANDARD:</text>
+  <text x="148" y="535" fill="#475569" font-size="11">Access token in JS memory (XSS-safe, ephemeral). Refresh token in HttpOnly cookie (XSS-safe, persistent).</text>
+  <text x="52" y="553" fill="#475569" font-size="11">On page load, call /auth/refresh silently to restore in-memory token if the user has a valid cookie-based session.</text>
+</svg>

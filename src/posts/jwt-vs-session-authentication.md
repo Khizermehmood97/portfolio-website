@@ -18,54 +18,7 @@ This post covers both mechanisms in depth: how they work, why sessions struggled
 
 Session-based auth is **stateful** — the server remembers you. Here's the complete flow:
 
-```
-┌─────────────────────────────────────────────────────────────────────┐
-│                  SESSION-BASED AUTH FLOW                            │
-└─────────────────────────────────────────────────────────────────────┘
-
-  Browser                 Web Server              Session Store (Redis/DB)
-     │                        │                          │
-     │  POST /login            │                          │
-     │  { email, password }    │                          │
-     │ ───────────────────────>│                          │
-     │                        │  Validate credentials     │
-     │                        │ ────────────────────────> │
-     │                        │ <─── User record ─────── │
-     │                        │                          │
-     │                        │  Create Session          │
-     │                        │  sessionId = "a3f9..."   │
-     │                        │  Store { userId, roles,  │
-     │                        │    expiry } in store     │
-     │                        │ ────────────────────────>│
-     │                        │                          │
-     │  HTTP 200              │                          │
-     │  Set-Cookie:           │                          │
-     │  sessionId=a3f9...;    │                          │
-     │  HttpOnly; Secure      │                          │
-     │ <─────────────────────-│                          │
-     │                        │                          │
-     │  (User navigates)      │                          │
-     │                        │                          │
-     │  GET /dashboard        │                          │
-     │  Cookie: sessionId=    │                          │
-     │          a3f9...       │                          │
-     │ ───────────────────────>│                          │
-     │                        │  Look up sessionId       │
-     │                        │ ────────────────────────>│
-     │                        │ <── Session data ──────  │
-     │                        │    { userId: 42,         │
-     │                        │      roles: ["admin"] }  │
-     │                        │                          │
-     │  HTTP 200 /dashboard   │                          │
-     │ <─────────────────────-│                          │
-     │                        │                          │
-     │  POST /logout           │                          │
-     │ ───────────────────────>│                          │
-     │                        │  Delete session          │
-     │                        │ ────────────────────────>│
-     │  Clear cookie          │                          │
-     │ <─────────────────────-│                          │
-```
+![Session-Based Authentication Flow](/blog/diagrams/session-flow.svg)
 
 **What's happening at each step:**
 
@@ -130,19 +83,7 @@ Sessions worked fine when every app was a single server talking to a single data
 
 Imagine your app runs on three servers behind a load balancer:
 
-```
-                    ┌──────────────────────┐
-                    │    Load Balancer      │
-                    └──────────┬───────────┘
-                               │
-              ┌────────────────┼────────────────┐
-              │                │                │
-        ┌─────▼────┐    ┌──────▼───┐    ┌──────▼────┐
-        │ Server A  │    │ Server B  │    │ Server C  │
-        │ Session:  │    │ Session:  │    │ Session:  │
-        │ a3f9=42   │    │  (empty)  │    │  (empty)  │
-        └───────────┘    └───────────┘    └───────────┘
-```
+![Session Scaling Problem — Load Balancer Flow](/blog/diagrams/scaling-problem.svg)
 
 User logs in via **Server A** — session `a3f9` is stored in A's memory.  
 Next request routes to **Server B** — B has no record of `a3f9` → user is logged out.
@@ -228,54 +169,7 @@ The signature is what makes JWT trustworthy. Without the server's secret key, no
 
 ## Part 4 — The JWT Authentication Flow
 
-```
-┌─────────────────────────────────────────────────────────────────────┐
-│                    JWT AUTH FLOW                                     │
-└─────────────────────────────────────────────────────────────────────┘
-
-  Browser / Mobile         Auth Server              Resource Server
-        │                       │                         │
-        │  POST /auth/login      │                         │
-        │  { email, password }   │                         │
-        │ ──────────────────────>│                         │
-        │                       │  Validate credentials   │
-        │                       │  (DB lookup, once)      │
-        │                       │                         │
-        │                       │  Sign JWT               │
-        │                       │  { sub, role, exp }     │
-        │                       │  with SECRET_KEY        │
-        │                       │                         │
-        │  HTTP 200              │                         │
-        │  { accessToken,        │                         │
-        │    refreshToken }      │                         │
-        │ <──────────────────────│                         │
-        │                       │                         │
-        │  (Store token          │                         │
-        │   client-side)         │                         │
-        │                       │                         │
-        │  GET /api/orders       │                         │
-        │  Authorization:        │                         │
-        │  Bearer eyJhbGci...    │                         │
-        │ ───────────────────────────────────────────────>│
-        │                       │                         │  Verify
-        │                       │                         │  signature
-        │                       │                         │  (no DB call)
-        │                       │                         │
-        │  HTTP 200 { orders }   │                         │
-        │ <───────────────────────────────────────────────│
-        │                       │                         │
-        │  (Token expires)       │                         │
-        │                       │                         │
-        │  POST /auth/refresh    │                         │
-        │  { refreshToken }      │                         │
-        │ ──────────────────────>│                         │
-        │                       │  Validate refresh token │
-        │                       │  (checks DB/store)      │
-        │                       │  Issue new access token │
-        │                       │                         │
-        │  { accessToken }       │                         │
-        │ <──────────────────────│                         │
-```
+![JWT Authentication Flow](/blog/diagrams/jwt-flow.svg)
 
 **Key difference from sessions:** The Resource Server validates the token **purely by verifying the cryptographic signature** — no database lookup, no network call to a session store. This is what makes JWT stateless.
 
@@ -541,57 +435,7 @@ async function silentRefresh() {
 
 The industry-standard approach for SPAs combines the best of all options:
 
-```
-┌─────────────────────────────────────────────────────────────────────┐
-│           RECOMMENDED DUAL-TOKEN STORAGE PATTERN                    │
-└─────────────────────────────────────────────────────────────────────┘
-
-  Browser (SPA)               Server
-       │                         │
-       │  POST /auth/login        │
-       │  { email, password }     │
-       │ ───────────────────────>│
-       │                         │  ┌─────────────────────────────┐
-       │                         │  │ Generate:                   │
-       │                         │  │  accessToken  (15 min JWT)  │
-       │                         │  │  refreshToken (30 day opaque│
-       │                         │  │    random string)           │
-       │                         │  └─────────────────────────────┘
-       │                         │
-       │  200 { accessToken }     │  Set-Cookie: refreshToken=...
-       │  + HttpOnly cookie       │  HttpOnly; Secure; SameSite=Strict
-       │ <──────────────────────-│  Path=/auth/refresh
-       │                         │
-       │  Store accessToken in   │
-       │  memory (React state)   │
-       │                         │
-       │  GET /api/data          │
-       │  Authorization:         │
-       │  Bearer <accessToken>   │
-       │ ───────────────────────>│  Verify JWT signature only
-       │  200 { data }           │  No DB call
-       │ <──────────────────────-│
-       │                         │
-       │  (15 min later —        │
-       │   token expired)        │
-       │                         │
-       │  POST /auth/refresh     │
-       │  [cookie sent auto]     │
-       │ ───────────────────────>│  Validate refresh token in DB
-       │                         │  Rotate: invalidate old, issue new
-       │  200 { accessToken }    │  Set-Cookie: new refreshToken
-       │ <──────────────────────-│
-       │                         │
-       │  Update in-memory       │
-       │  access token           │
-       │                         │
-       │  POST /auth/logout      │
-       │  [cookie sent auto]     │
-       │ ───────────────────────>│  Delete refresh token from DB
-       │                         │  Clear cookie
-       │  Clear memory token     │
-       │ <──────────────────────-│
-```
+![Recommended Dual-Token Storage Pattern](/blog/diagrams/dual-token-pattern.svg)
 
 **Summary of the pattern:**
 - **Access token** → stored in JavaScript memory (React state / Zustand / module variable). Short-lived, used in `Authorization: Bearer` header
