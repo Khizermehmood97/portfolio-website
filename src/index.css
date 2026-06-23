@@ -18,9 +18,9 @@
   box-sizing: border-box;
 }
 
-html {
-  scroll-behavior: smooth;
-}
+/* Smooth scrolling is handled in JS (src/lib/smoothScroll.ts) so we can
+   control the duration and easing. Native scroll-behavior is intentionally
+   left as the default. */
 
 body {
   margin: 0;

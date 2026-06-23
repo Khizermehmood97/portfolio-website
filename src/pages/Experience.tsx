@@ -89,7 +89,7 @@ function TimelineEntry({ entry, index }: { entry: ExperienceEntry; index: number
 export default function Experience() {
   return (
     <PageWrapper>
-      <section className="max-w-5xl mx-auto px-6 py-16">
+      <section id="experience" className="max-w-5xl mx-auto px-6 py-16 scroll-mt-16">
         <SectionHeading
           title="Experience"
           subtitle="6 years of full-stack development across enterprise, cloud, and AI projects."

@@ -20,7 +20,7 @@ export default function Contact() {
 
   return (
     <PageWrapper>
-      <section className="max-w-5xl mx-auto px-6 py-16">
+      <section id="contact" className="max-w-5xl mx-auto px-6 py-16 scroll-mt-16">
         <SectionHeading
           title="Contact"
           subtitle="Have a project in mind or want to connect? I'd love to hear from you."

@@ -72,7 +72,7 @@ const categoryDot: Record<string, string> = {
 export default function Skills() {
   return (
     <PageWrapper>
-      <section className="max-w-5xl mx-auto px-6 py-16">
+      <section id="skills" className="max-w-5xl mx-auto px-6 py-16 scroll-mt-16">
         <SectionHeading
           title="Skills"
           subtitle="Technologies and tools I work with across backend, frontend, cloud, and AI."

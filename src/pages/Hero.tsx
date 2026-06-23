@@ -4,6 +4,7 @@ import { motion, useAnimation } from 'framer-motion'
 import type { Variants } from 'framer-motion'
 import { SiDotnet, SiReact, SiAngular, SiTypescript, SiDocker } from 'react-icons/si'
 import ExternalLink from '@/components/ui/ExternalLink'
+import { smoothScrollToId } from '@/lib/smoothScroll'
 import personal from '@/data/personal'
 import { getAllPosts } from '@/lib/blog'
 import type { BlogPost } from '@/types'
@@ -164,7 +165,7 @@ export default function Hero() {
   }, [controls])
 
   return (
-    <section className="min-h-[calc(100vh-4rem)] flex items-center px-6 py-16">
+    <section id="hero" className="min-h-[calc(100vh-4rem)] flex items-center px-6 py-16 scroll-mt-16">
       <div className="max-w-6xl mx-auto w-full grid grid-cols-1 lg:grid-cols-[1fr_380px] gap-16 xl:gap-24 items-center">
 
         {/* ── Left: Hero content ── */}
@@ -196,18 +197,20 @@ export default function Hero() {
 
           {/* CTA buttons */}
           <motion.div variants={item} className="flex flex-wrap gap-3 mb-10">
-            <Link
-              to="/projects"
+            <a
+              href="#projects"
+              onClick={(e) => { e.preventDefault(); smoothScrollToId('projects') }}
               className="px-5 py-2.5 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-500 transition-colors"
             >
               View My Work
-            </Link>
-            <Link
-              to="/contact"
+            </a>
+            <a
+              href="#contact"
+              onClick={(e) => { e.preventDefault(); smoothScrollToId('contact') }}
               className="px-5 py-2.5 border border-slate-700 text-slate-300 text-sm font-medium rounded-lg hover:border-slate-500 hover:text-slate-100 transition-colors"
             >
               Get In Touch
-            </Link>
+            </a>
           </motion.div>
 
           {/* Tech badges with logos */}

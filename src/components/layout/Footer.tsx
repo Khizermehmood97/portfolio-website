@@ -11,10 +11,10 @@ export default function Footer() {
         </p>
 
         <nav className="flex items-center gap-5 text-sm text-slate-500">
-          <Link to="/about" className="hover:text-slate-200 transition-colors">About</Link>
-          <Link to="/projects" className="hover:text-slate-200 transition-colors">Projects</Link>
+          <Link to="/#about" className="hover:text-slate-200 transition-colors">About</Link>
+          <Link to="/#projects" className="hover:text-slate-200 transition-colors">Projects</Link>
           <Link to="/blog" className="hover:text-slate-200 transition-colors">Blog</Link>
-          <Link to="/contact" className="hover:text-slate-200 transition-colors">Contact</Link>
+          <Link to="/#contact" className="hover:text-slate-200 transition-colors">Contact</Link>
         </nav>
 
         <div className="flex items-center gap-4">

@@ -31,7 +31,7 @@ const interests = [
 export default function About() {
   return (
     <PageWrapper>
-      <section className="max-w-5xl mx-auto px-6 py-16">
+      <section id="about" className="max-w-5xl mx-auto px-6 py-16 scroll-mt-16">
         <SectionHeading title="About" />
 
         <div className="grid grid-cols-1 lg:grid-cols-5 gap-12">

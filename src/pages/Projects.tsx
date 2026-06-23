@@ -18,7 +18,7 @@ const typeStyle: Record<string, string> = {
 export default function Projects() {
   return (
     <PageWrapper>
-      <section className="max-w-5xl mx-auto px-6 py-16">
+      <section id="projects" className="max-w-5xl mx-auto px-6 py-16 scroll-mt-16">
         <SectionHeading
           title="Projects"
           subtitle="A selection of enterprise systems and research work I've built or contributed to."
