@@ -20,24 +20,24 @@ function TimelineEntry({ entry, index }: { entry: ExperienceEntry; index: number
       className="relative pl-8 pb-12 last:pb-0"
     >
       {/* Timeline line */}
-      <div className="absolute left-0 top-1.5 bottom-0 w-px bg-slate-800 last:hidden" />
+      <div className="absolute left-0 top-1.5 bottom-0 w-px bg-line last:hidden" />
       {/* Timeline dot */}
-      <div className="absolute left-[-4px] top-1.5 w-2.5 h-2.5 rounded-full bg-blue-500 border-2 border-slate-950 ring-1 ring-blue-500" />
+      <div className="absolute left-[-4px] top-1.5 w-2.5 h-2.5 rounded-full bg-copper border-2 border-ink ring-1 ring-copper" />
 
       <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-1 mb-1">
         <div>
-          <h3 className="text-lg font-semibold text-slate-100">{entry.company}</h3>
-          <p className="text-blue-400 font-medium text-sm">{entry.role}</p>
+          <h3 className="font-display text-lg font-semibold text-text-hi">{entry.company}</h3>
+          <p className="text-copper font-medium text-sm">{entry.role}</p>
         </div>
-        <span className="text-sm text-slate-500 whitespace-nowrap">{entry.period}</span>
+        <span className="font-mono text-xs text-text-dim whitespace-nowrap">{entry.period}</span>
       </div>
 
       {/* Top-level bullets */}
       {entry.bullets.length > 0 && (
-        <ul className="mt-3 space-y-1.5 text-sm text-slate-400">
+        <ul className="mt-3 space-y-1.5 text-sm text-text">
           {entry.bullets.map((b, i) => (
             <li key={i} className="flex gap-2">
-              <span className="mt-1.5 w-1 h-1 rounded-full bg-slate-600 flex-shrink-0" />
+              <span className="mt-1.5 w-1 h-1 rounded-full bg-text-dim flex-shrink-0" />
               {b}
             </li>
           ))}
@@ -54,21 +54,21 @@ function TimelineEntry({ entry, index }: { entry: ExperienceEntry; index: number
       {/* Client engagements */}
       {entry.engagements && entry.engagements.length > 0 && (
         <div className="mt-6 space-y-5">
-          <h4 className="text-xs font-semibold text-slate-500 uppercase tracking-wider">Client Engagements</h4>
+          <h4 className="font-mono text-[11px] font-semibold text-text-dim uppercase tracking-[0.2em]">Client Engagements</h4>
           {entry.engagements.map((eng) => (
             <div
               key={eng.client}
-              className="border border-slate-800 rounded-xl p-4 bg-slate-900"
+              className="border border-line rounded-xl p-4 bg-ink-raised"
             >
               <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-0.5 mb-2">
-                <h5 className="font-semibold text-slate-200 text-sm">{eng.client}</h5>
-                <span className="text-xs text-slate-500">{eng.location}</span>
+                <h5 className="font-semibold text-text-hi text-sm">{eng.client}</h5>
+                <span className="font-mono text-xs text-text-dim">{eng.location}</span>
               </div>
-              <p className="text-sm text-slate-500 mb-3">{eng.description}</p>
-              <ul className="space-y-1.5 text-sm text-slate-400 mb-3">
+              <p className="text-sm text-text-dim mb-3">{eng.description}</p>
+              <ul className="space-y-1.5 text-sm text-text mb-3">
                 {eng.bullets.map((b, i) => (
                   <li key={i} className="flex gap-2">
-                    <span className="mt-1.5 w-1 h-1 rounded-full bg-slate-700 flex-shrink-0" />
+                    <span className="mt-1.5 w-1 h-1 rounded-full bg-text-dim flex-shrink-0" />
                     {b}
                   </li>
                 ))}
@@ -91,6 +91,7 @@ export default function Experience() {
     <PageWrapper>
       <section id="experience" className="max-w-5xl mx-auto px-6 py-16 scroll-mt-16">
         <SectionHeading
+          index="03"
           title="Experience"
           subtitle="6 years of full-stack development across enterprise, cloud, and AI projects."
         />

@@ -10,12 +10,13 @@ export default function Blog() {
     <PageWrapper>
       <section className="max-w-3xl mx-auto px-6 py-16">
         <SectionHeading
+          index="//"
           title="Blog"
           subtitle="Technical writing on .NET, React, Azure, and AI engineering."
         />
 
         {posts.length === 0 ? (
-          <p className="text-slate-500 text-sm">No posts published yet. Check back soon.</p>
+          <p className="text-text-dim text-sm">No posts published yet. Check back soon.</p>
         ) : (
           <div className="space-y-4">
             {posts.map((post) => (

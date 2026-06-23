@@ -4,23 +4,23 @@ import personal from '@/data/personal'
 
 export default function Footer() {
   return (
-    <footer className="border-t border-slate-800 bg-slate-900 mt-auto">
+    <footer className="border-t border-line bg-ink-raised mt-auto">
       <div className="max-w-5xl mx-auto px-6 py-8 flex flex-col sm:flex-row items-center justify-between gap-4">
-        <p className="text-sm text-slate-500">
+        <p className="font-mono text-xs text-text-dim">
           © {new Date().getFullYear()} Khizer Mehmood. All rights reserved.
         </p>
 
-        <nav className="flex items-center gap-5 text-sm text-slate-500">
-          <Link to="/#about" className="hover:text-slate-200 transition-colors">About</Link>
-          <Link to="/#projects" className="hover:text-slate-200 transition-colors">Projects</Link>
-          <Link to="/blog" className="hover:text-slate-200 transition-colors">Blog</Link>
-          <Link to="/#contact" className="hover:text-slate-200 transition-colors">Contact</Link>
+        <nav className="flex items-center gap-5 text-sm text-text-dim">
+          <Link to="/#about" className="hover:text-text-hi transition-colors">About</Link>
+          <Link to="/#projects" className="hover:text-text-hi transition-colors">Projects</Link>
+          <Link to="/blog" className="hover:text-text-hi transition-colors">Blog</Link>
+          <Link to="/#contact" className="hover:text-text-hi transition-colors">Contact</Link>
         </nav>
 
         <div className="flex items-center gap-4">
           <ExternalLink
             href={personal.github}
-            className="text-slate-500 hover:text-slate-200 transition-colors"
+            className="text-text-dim hover:text-text-hi transition-colors"
             aria-label="GitHub"
           >
             <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
@@ -29,7 +29,7 @@ export default function Footer() {
           </ExternalLink>
           <ExternalLink
             href={personal.linkedin}
-            className="text-slate-500 hover:text-slate-200 transition-colors"
+            className="text-text-dim hover:text-text-hi transition-colors"
             aria-label="LinkedIn"
           >
             <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">

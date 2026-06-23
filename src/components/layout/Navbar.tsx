@@ -15,6 +15,20 @@ const sectionLinks = [
 
 const sectionIds = ['hero', ...sectionLinks.map((l) => l.id)]
 
+/** KM monogram rendered as a hairline blueprint tile, not a flat disc. */
+function Monogram() {
+  return (
+    <span className="relative w-9 h-9 grid place-items-center rounded-md border border-line bg-ink-raised overflow-hidden transition-colors group-hover:border-copper/60">
+      {/* faint internal grid lines */}
+      <span className="absolute inset-x-0 top-1/2 h-px bg-line/70" />
+      <span className="absolute inset-y-0 left-1/2 w-px bg-line/70" />
+      <span className="relative font-display text-sm font-bold text-text-hi tracking-tight">
+        KM
+      </span>
+    </span>
+  )
+}
+
 export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false)
   const [active, setActive] = useState('')
@@ -69,36 +83,40 @@ export default function Navbar() {
   const linkClass = (isActive: boolean) =>
     `text-sm font-medium transition-colors duration-150 ${
       isActive
-        ? 'text-blue-400 border-b-2 border-blue-400 pb-0.5'
-        : 'text-slate-400 hover:text-slate-100'
+        ? 'text-copper'
+        : 'text-text hover:text-text-hi'
     }`
 
   return (
-    <header className="sticky top-0 z-50 bg-slate-900/95 backdrop-blur-sm border-b border-slate-800">
+    <header className="sticky top-0 z-50 bg-ink/80 backdrop-blur-md border-b border-line">
       <nav className="max-w-5xl mx-auto px-6 h-16 flex items-center justify-between">
         {/* Logo */}
-        <button
-          onClick={goHome}
-          className="w-9 h-9 rounded-full bg-blue-600 text-white flex items-center justify-center text-sm font-bold select-none hover:bg-blue-500 transition-colors"
-        >
-          KM
+        <button onClick={goHome} className="group" aria-label="Back to top">
+          <Monogram />
         </button>
 
         {/* Desktop nav */}
         <div className="hidden md:flex items-center gap-7">
-          {sectionLinks.map((link) => (
-            <button
-              key={link.id}
-              onClick={() => goToSection(link.id)}
-              className={linkClass(onHome && active === link.id)}
-            >
-              {link.label}
-            </button>
-          ))}
+          {sectionLinks.map((link, i) => {
+            const isActive = onHome && active === link.id
+            return (
+              <button
+                key={link.id}
+                onClick={() => goToSection(link.id)}
+                className={`group flex items-baseline gap-1.5 ${linkClass(isActive)}`}
+              >
+                <span className="font-mono text-[10px] text-text-dim group-hover:text-copper transition-colors">
+                  {String(i + 1).padStart(2, '0')}
+                </span>
+                {link.label}
+              </button>
+            )
+          })}
           <Link
             to="/blog"
-            className={linkClass(location.pathname.startsWith('/blog'))}
+            className={`flex items-baseline gap-1.5 ${linkClass(location.pathname.startsWith('/blog'))}`}
           >
+            <span className="font-mono text-[10px] text-text-dim">06</span>
             Blog
           </Link>
         </div>
@@ -107,7 +125,7 @@ export default function Navbar() {
         <button
           onClick={() => setMobileOpen((v) => !v)}
           aria-label="Toggle menu"
-          className="md:hidden flex flex-col gap-1.5 p-1.5 text-slate-400 hover:text-slate-100 transition-colors"
+          className="md:hidden flex flex-col gap-1.5 p-1.5 text-text hover:text-text-hi transition-colors"
         >
           <span className={`block w-5 h-0.5 bg-current transition-transform duration-200 ${mobileOpen ? 'translate-y-2 rotate-45' : ''}`} />
           <span className={`block w-5 h-0.5 bg-current transition-opacity duration-200 ${mobileOpen ? 'opacity-0' : ''}`} />
@@ -123,23 +141,27 @@ export default function Navbar() {
             animate={{ height: 'auto', opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.2, ease: 'easeInOut' }}
-            className="md:hidden overflow-hidden border-t border-slate-800"
+            className="md:hidden overflow-hidden border-t border-line"
           >
-            <div className="flex flex-col px-6 py-4 gap-4 bg-slate-900">
-              {sectionLinks.map((link) => (
+            <div className="flex flex-col px-6 py-4 gap-4 bg-ink">
+              {sectionLinks.map((link, i) => (
                 <button
                   key={link.id}
                   onClick={() => goToSection(link.id)}
-                  className={`text-left ${linkClass(onHome && active === link.id)}`}
+                  className={`flex items-baseline gap-2 text-left ${linkClass(onHome && active === link.id)}`}
                 >
+                  <span className="font-mono text-[10px] text-text-dim">
+                    {String(i + 1).padStart(2, '0')}
+                  </span>
                   {link.label}
                 </button>
               ))}
               <Link
                 to="/blog"
                 onClick={() => setMobileOpen(false)}
-                className={linkClass(location.pathname.startsWith('/blog'))}
+                className={`flex items-baseline gap-2 ${linkClass(location.pathname.startsWith('/blog'))}`}
               >
+                <span className="font-mono text-[10px] text-text-dim">06</span>
                 Blog
               </Link>
             </div>

@@ -48,48 +48,33 @@ const iconMap: Record<string, IconComponent> = {
   'Postman': SiPostman,
 }
 
-// Subtle accent colours per category
-const categoryAccent: Record<string, string> = {
-  'Languages':       'border-violet-800/60 hover:border-violet-600',
-  'Backend':         'border-blue-800/60 hover:border-blue-600',
-  'Frontend':        'border-cyan-800/60 hover:border-cyan-600',
-  'Databases':       'border-emerald-800/60 hover:border-emerald-600',
-  'Cloud & DevOps':  'border-sky-800/60 hover:border-sky-600',
-  'AI / ML':         'border-purple-800/60 hover:border-purple-600',
-  'Tools & Practices': 'border-slate-700 hover:border-slate-500',
-}
-
-const categoryDot: Record<string, string> = {
-  'Languages':       'bg-violet-500',
-  'Backend':         'bg-blue-500',
-  'Frontend':        'bg-cyan-400',
-  'Databases':       'bg-emerald-500',
-  'Cloud & DevOps':  'bg-sky-400',
-  'AI / ML':         'bg-purple-500',
-  'Tools & Practices': 'bg-slate-400',
-}
+// AI/ML is the one category that gets the teal research accent; every
+// other category shares the copper signal — disciplined, not a rainbow.
+const isResearch = (category: string) => category === 'AI / ML'
 
 export default function Skills() {
   return (
     <PageWrapper>
       <section id="skills" className="max-w-5xl mx-auto px-6 py-16 scroll-mt-16">
         <SectionHeading
+          index="02"
           title="Skills"
           subtitle="Technologies and tools I work with across backend, frontend, cloud, and AI."
         />
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
           {skillGroups.map((group) => {
-            const borderClass = categoryAccent[group.category] ?? 'border-slate-700 hover:border-slate-500'
-            const dotClass = categoryDot[group.category] ?? 'bg-slate-400'
+            const research = isResearch(group.category)
+            const dotClass = research ? 'bg-teal' : 'bg-copper'
+            const hoverBorder = research ? 'hover:border-teal/50' : 'hover:border-copper/50'
             return (
               <div
                 key={group.category}
-                className={`border rounded-xl p-5 bg-slate-900 transition-colors ${borderClass}`}
+                className={`border border-line rounded-xl p-5 bg-ink-raised transition-colors ${hoverBorder}`}
               >
                 <div className="flex items-center gap-2 mb-4">
                   <span className={`w-2 h-2 rounded-full flex-shrink-0 ${dotClass}`} />
-                  <h3 className="text-sm font-semibold text-slate-200 uppercase tracking-wider">
+                  <h3 className="font-mono text-[11px] font-semibold text-text-hi uppercase tracking-[0.18em]">
                     {group.category}
                   </h3>
                 </div>
@@ -99,7 +84,7 @@ export default function Skills() {
                     return (
                       <span
                         key={skill}
-                        className="flex items-center gap-1.5 px-2.5 py-1 bg-slate-800 text-slate-300 text-xs font-medium rounded-lg border border-slate-700 hover:border-slate-500 hover:text-slate-100 transition-colors"
+                        className="flex items-center gap-1.5 px-2.5 py-1 bg-ink-soft text-text text-xs font-medium rounded-md border border-line hover:border-text-dim hover:text-text-hi transition-colors"
                       >
                         {Icon && <Icon size={13} className="flex-shrink-0 opacity-80" />}
                         {skill}

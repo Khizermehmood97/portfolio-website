@@ -111,7 +111,7 @@ function BlogThumbnailCard({ post }: { post: BlogPost }) {
     <motion.div variants={blogCard}>
       <Link
         to={`/blog/${post.slug}`}
-        className="group flex gap-4 p-3 rounded-xl border border-slate-800 bg-slate-900 hover:border-slate-600 hover:bg-slate-800/70 transition-all"
+        className="group flex gap-4 p-3 rounded-lg border border-line bg-ink-raised hover:border-copper/50 hover:bg-ink-soft transition-all"
       >
         {/* Thumbnail */}
         <div className={`relative w-20 h-20 flex-shrink-0 rounded-lg overflow-hidden bg-gradient-to-br ${tagGradient(post.tags)}`}>
@@ -135,17 +135,17 @@ function BlogThumbnailCard({ post }: { post: BlogPost }) {
 
         {/* Text */}
         <div className="flex flex-col justify-center min-w-0">
-          <p className="text-[11px] text-slate-500 mb-1">{formatDate(post.date)}</p>
-          <h3 className="text-sm font-semibold text-slate-200 group-hover:text-blue-400 transition-colors leading-snug line-clamp-2 mb-1">
+          <p className="font-mono text-[10px] text-text-dim mb-1">{formatDate(post.date)}</p>
+          <h3 className="text-sm font-semibold text-text-hi group-hover:text-copper transition-colors leading-snug line-clamp-2 mb-1">
             {post.title}
           </h3>
-          <p className="text-xs text-slate-500 line-clamp-2 leading-relaxed">
+          <p className="text-xs text-text-dim line-clamp-2 leading-relaxed">
             {post.excerpt}
           </p>
         </div>
 
         {/* Arrow */}
-        <div className="flex-shrink-0 self-center text-slate-600 group-hover:text-blue-400 group-hover:translate-x-0.5 transition-all">
+        <div className="flex-shrink-0 self-center text-text-dim group-hover:text-copper group-hover:translate-x-0.5 transition-all">
           <svg width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" d="M9 18l6-6-6-6" />
           </svg>
@@ -165,34 +165,46 @@ export default function Hero() {
   }, [controls])
 
   return (
-    <section id="hero" className="min-h-[calc(100vh-4rem)] flex items-center px-6 py-16 scroll-mt-16">
-      <div className="max-w-6xl mx-auto w-full grid grid-cols-1 lg:grid-cols-[1fr_380px] gap-16 xl:gap-24 items-center">
+    <section id="hero" className="relative min-h-[calc(100vh-4rem)] flex items-center px-6 py-16 scroll-mt-16 overflow-hidden">
+      {/* ── Atmosphere: faint cool light-source, then blueprint grid ── */}
+      <div className="absolute inset-0 bp-glow pointer-events-none" aria-hidden="true" />
+      <div className="absolute inset-0 bp-grid bp-grid-mask pointer-events-none" aria-hidden="true" />
+
+      <div className="relative max-w-6xl mx-auto w-full grid grid-cols-1 lg:grid-cols-[1fr_380px] gap-16 xl:gap-24 items-center">
 
         {/* ── Left: Hero content ── */}
         <motion.div variants={container} initial="hidden" animate={controls}>
-          {/* Profile photo */}
-          <motion.div variants={item} className="mb-6">
+          {/* Eyebrow: mono role marker + availability */}
+          <motion.div variants={item} className="flex items-center gap-3 mb-6">
+            <span className="font-mono text-xs uppercase tracking-[0.25em] text-copper">
+              {'// senior full-stack engineer'}
+            </span>
+          </motion.div>
+
+          {/* Profile + name row */}
+          <motion.div variants={item} className="flex items-center gap-4 mb-5">
             <img
               src="/profile.png"
               alt="Khizer Mehmood"
-              className="w-20 h-20 rounded-full object-cover object-top ring-4 ring-blue-600/30"
+              className="w-16 h-16 rounded-md object-cover object-top border border-line"
             />
+            <h1 className="font-display text-5xl sm:text-6xl font-bold text-text-hi tracking-tight">
+              {personal.name}
+            </h1>
           </motion.div>
 
-          {/* Name */}
-          <motion.h1 variants={item} className="text-5xl sm:text-6xl font-bold text-slate-100 tracking-tight mb-3">
-            {personal.name}
-          </motion.h1>
-
-          {/* Title */}
-          <motion.p variants={item} className="text-xl text-blue-400 font-medium mb-5">
-            {personal.title}
+          {/* Thesis: the dual identity, stated plainly */}
+          <motion.p variants={item} className="text-xl sm:text-2xl text-text leading-snug mb-6 max-w-xl">
+            I build resilient enterprise systems on{' '}
+            <span className="text-text-hi font-medium">.NET, React &amp; Azure</span>
+            {' '}— and research{' '}
+            <span className="text-teal font-medium">multimodal AI for cancer diagnosis</span>.
           </motion.p>
 
-          {/* Tagline */}
-          <motion.p variants={item} className="text-lg text-slate-400 leading-relaxed mb-8 max-w-xl">
-            6 years building resilient and scalable enterprise applications across
-            .NET, React, and Azure cloud infrastructure.
+          {/* Supporting line */}
+          <motion.p variants={item} className="text-base text-text-dim leading-relaxed mb-8 max-w-lg">
+            6 years shipping production software for energy, petrochemical, and
+            government clients. Currently completing an MS thesis on vision–genomics fusion.
           </motion.p>
 
           {/* CTA buttons */}
@@ -200,14 +212,14 @@ export default function Hero() {
             <a
               href="#projects"
               onClick={(e) => { e.preventDefault(); smoothScrollToId('projects') }}
-              className="px-5 py-2.5 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-500 transition-colors"
+              className="px-5 py-2.5 bg-copper text-ink text-sm font-semibold rounded-md hover:bg-copper-dim transition-colors"
             >
               View My Work
             </a>
             <a
               href="#contact"
               onClick={(e) => { e.preventDefault(); smoothScrollToId('contact') }}
-              className="px-5 py-2.5 border border-slate-700 text-slate-300 text-sm font-medium rounded-lg hover:border-slate-500 hover:text-slate-100 transition-colors"
+              className="px-5 py-2.5 border border-line text-text text-sm font-medium rounded-md hover:border-teal hover:text-teal transition-colors"
             >
               Get In Touch
             </a>
@@ -218,10 +230,10 @@ export default function Hero() {
             {techStack.map(({ name, icon: Icon, color }) => (
               <span
                 key={name}
-                className="flex items-center gap-1.5 px-3 py-1.5 bg-slate-800/80 border border-slate-700 rounded-full hover:border-slate-500 transition-colors"
+                className="flex items-center gap-1.5 px-3 py-1.5 bg-ink-raised border border-line rounded-md hover:border-copper/50 transition-colors"
               >
                 <span style={{ color, display: 'flex' }}><Icon size={14} /></span>
-                <span className="text-xs font-medium text-slate-300">{name}</span>
+                <span className="font-mono text-[11px] font-medium text-text">{name}</span>
               </span>
             ))}
           </motion.div>
@@ -230,7 +242,7 @@ export default function Hero() {
           <motion.div variants={item} className="flex items-center gap-5">
             <ExternalLink
               href={personal.github}
-              className="flex items-center gap-2 text-sm text-slate-500 hover:text-slate-200 transition-colors"
+              className="flex items-center gap-2 text-sm text-text-dim hover:text-text-hi transition-colors"
             >
               <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                 <path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" />
@@ -239,7 +251,7 @@ export default function Hero() {
             </ExternalLink>
             <ExternalLink
               href={personal.linkedin}
-              className="flex items-center gap-2 text-sm text-slate-500 hover:text-slate-200 transition-colors"
+              className="flex items-center gap-2 text-sm text-text-dim hover:text-text-hi transition-colors"
             >
               <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                 <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
@@ -248,7 +260,7 @@ export default function Hero() {
             </ExternalLink>
             <a
               href={`mailto:${personal.email}`}
-              className="flex items-center gap-2 text-sm text-slate-500 hover:text-slate-200 transition-colors"
+              className="flex items-center gap-2 text-sm text-text-dim hover:text-text-hi transition-colors"
             >
               <svg width="16" height="16" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24" aria-hidden="true">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" />
@@ -264,17 +276,17 @@ export default function Hero() {
             variants={blogPanel}
             initial="hidden"
             animate={controls}
-            className="lg:border-l lg:border-slate-800 lg:pl-12"
+            className="lg:border-l lg:border-line lg:pl-12"
           >
             {/* Panel header */}
             <motion.div variants={blogCard} className="flex items-center justify-between mb-5">
               <div>
-                <h2 className="text-base font-semibold text-slate-200">Recent Blog Posts</h2>
-                <div className="w-8 h-0.5 bg-blue-500 mt-1" />
+                <h2 className="font-mono text-[11px] uppercase tracking-[0.2em] text-text-dim">Recent Writing</h2>
+                <div className="w-8 h-0.5 bg-copper mt-2" />
               </div>
               <Link
                 to="/blog"
-                className="text-xs text-slate-500 hover:text-blue-400 transition-colors flex items-center gap-1"
+                className="text-xs text-text-dim hover:text-teal transition-colors flex items-center gap-1"
               >
                 All posts
                 <svg width="12" height="12" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
@@ -294,7 +306,7 @@ export default function Hero() {
             <motion.div variants={blogCard} className="mt-5">
               <Link
                 to="/blog"
-                className="flex items-center justify-center gap-2 w-full py-2.5 rounded-lg border border-dashed border-slate-700 text-xs text-slate-500 hover:border-blue-600 hover:text-blue-400 transition-colors"
+                className="flex items-center justify-center gap-2 w-full py-2.5 rounded-md border border-dashed border-line text-xs text-text-dim hover:border-teal hover:text-teal transition-colors"
               >
                 <svg width="13" height="13" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4" />

@@ -12,7 +12,7 @@ export default function InitialsAvatar({ size = 'md' }: Props) {
   const { container, text } = sizes[size]
   return (
     <div
-      className={`${container} rounded-full bg-slate-900 text-white flex items-center justify-center select-none flex-shrink-0`}
+      className={`${container} rounded-md bg-ink-raised border border-line text-text-hi font-display flex items-center justify-center select-none flex-shrink-0`}
     >
       <span className={text}>KM</span>
     </div>

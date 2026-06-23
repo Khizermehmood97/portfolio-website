@@ -17,7 +17,7 @@ function readingTime(content: string) {
 
 export default function PostCard({ post }: { post: BlogPost }) {
   return (
-    <article className="border border-slate-800 rounded-xl overflow-hidden bg-slate-900 hover:border-slate-700 hover:bg-slate-800/50 transition-all group">
+    <article className="border border-line rounded-xl overflow-hidden bg-ink-raised hover:border-copper/40 hover:bg-ink-soft transition-all group">
       {/* Cover image */}
       {post.cover && (
         <Link to={`/blog/${post.slug}`}>
@@ -32,19 +32,19 @@ export default function PostCard({ post }: { post: BlogPost }) {
       )}
 
       <div className="p-6">
-        <div className="flex items-center gap-3 text-xs text-slate-500 mb-3">
+        <div className="flex items-center gap-3 font-mono text-xs text-text-dim mb-3">
           <time dateTime={post.date}>{formatDate(post.date)}</time>
           <span>·</span>
           <span>{readingTime(post.content)}</span>
         </div>
 
         <Link to={`/blog/${post.slug}`}>
-          <h2 className="text-lg font-semibold text-slate-100 group-hover:text-blue-400 transition-colors mb-2 leading-snug">
+          <h2 className="font-display text-lg font-semibold text-text-hi group-hover:text-copper transition-colors mb-2 leading-snug">
             {post.title}
           </h2>
         </Link>
 
-        <p className="text-sm text-slate-400 leading-relaxed mb-4">{post.excerpt}</p>
+        <p className="text-sm text-text leading-relaxed mb-4">{post.excerpt}</p>
 
         <div className="flex flex-wrap gap-1.5">
           {post.tags.map((tag) => (

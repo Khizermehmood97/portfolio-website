@@ -32,7 +32,7 @@ export default function About() {
   return (
     <PageWrapper>
       <section id="about" className="max-w-5xl mx-auto px-6 py-16 scroll-mt-16">
-        <SectionHeading title="About" />
+        <SectionHeading index="01" title="About" />
 
         <div className="grid grid-cols-1 lg:grid-cols-5 gap-12">
           {/* Bio */}
@@ -42,15 +42,15 @@ export default function About() {
                 <img
                   src="/profile.png"
                   alt="Khizer Mehmood"
-                  className="w-16 h-16 rounded-full object-cover object-top flex-shrink-0 ring-4 ring-blue-600/20"
+                  className="w-16 h-16 rounded-md object-cover object-top flex-shrink-0 border border-line"
                 />
                 <div>
-                  <h2 className="text-xl font-bold text-slate-100">{personal.name}</h2>
-                  <p className="text-blue-400 font-medium text-sm">{personal.title}</p>
+                  <h2 className="font-display text-xl font-bold text-text-hi">{personal.name}</h2>
+                  <p className="text-copper font-medium text-sm">{personal.title}</p>
                 </div>
               </div>
 
-              <div className="space-y-4 text-slate-400 leading-relaxed">
+              <div className="space-y-4 text-text leading-relaxed">
                 <p>
                   I'm a Senior Full-Stack Developer with 6 years of experience delivering
                   enterprise-grade software for clients across the energy, petrochemical, and
@@ -76,45 +76,45 @@ export default function About() {
               <div className="flex gap-4 mt-6">
                 <ExternalLink
                   href={personal.github}
-                  className="text-sm text-slate-500 hover:text-slate-200 transition-colors underline underline-offset-2"
+                  className="text-sm text-text-dim hover:text-teal transition-colors underline underline-offset-2"
                 >
                   GitHub
                 </ExternalLink>
                 <ExternalLink
                   href={personal.linkedin}
-                  className="text-sm text-slate-500 hover:text-slate-200 transition-colors underline underline-offset-2"
+                  className="text-sm text-text-dim hover:text-teal transition-colors underline underline-offset-2"
                 >
                   LinkedIn
                 </ExternalLink>
                 <a
                   href={`mailto:${personal.email}`}
-                  className="text-sm text-slate-500 hover:text-slate-200 transition-colors underline underline-offset-2"
+                  className="text-sm text-text-dim hover:text-teal transition-colors underline underline-offset-2"
                 >
                   {personal.email}
                 </a>
               </div>
             </div>
 
-            {/* MS Thesis */}
-            <div className="border border-blue-800 bg-blue-950/40 rounded-xl p-5">
-              <h3 className="text-sm font-semibold text-blue-400 uppercase tracking-wider mb-2">MS Thesis Research</h3>
-              <p className="text-slate-200 font-semibold mb-1">HistoGeneX — Multimodal Vision–Genomics Fusion for Cancer Analysis</p>
-              <p className="text-sm text-slate-400 leading-relaxed mb-3">
+            {/* MS Thesis — research accent (teal) */}
+            <div className="border border-teal/30 bg-teal/5 rounded-xl p-5">
+              <h3 className="font-mono text-[11px] font-semibold text-teal uppercase tracking-[0.2em] mb-2">MS Thesis Research</h3>
+              <p className="text-text-hi font-semibold mb-1">HistoGeneX — Multimodal Vision–Genomics Fusion for Cancer Analysis</p>
+              <p className="text-sm text-text leading-relaxed mb-3">
                 A deep learning framework that fuses whole-slide histopathology images (WSIs) with
                 gene expression data for cancer subtype classification, survival prediction, and
                 treatment response analysis.
               </p>
-              <ul className="space-y-1.5 text-sm text-slate-400">
+              <ul className="space-y-1.5 text-sm text-text">
                 <li className="flex gap-2">
-                  <span className="mt-1.5 w-1 h-1 rounded-full bg-blue-500 flex-shrink-0" />
+                  <span className="mt-1.5 w-1 h-1 rounded-full bg-teal flex-shrink-0" />
                   Visual encoder (ViT / CNN) extracts patch-level features from WSIs; tabular encoder (MLP / TabNet) processes genomic profiles.
                 </li>
                 <li className="flex gap-2">
-                  <span className="mt-1.5 w-1 h-1 rounded-full bg-blue-500 flex-shrink-0" />
+                  <span className="mt-1.5 w-1 h-1 rounded-full bg-teal flex-shrink-0" />
                   Transformer-based cross-modal attention fusion captures region–gene interactions and high-order morphology–molecular relationships.
                 </li>
                 <li className="flex gap-2">
-                  <span className="mt-1.5 w-1 h-1 rounded-full bg-blue-500 flex-shrink-0" />
+                  <span className="mt-1.5 w-1 h-1 rounded-full bg-teal flex-shrink-0" />
                   Attention-based interpretability links specific genes to spatial tissue patterns. Evaluated on TCGA.
                 </li>
               </ul>
@@ -124,16 +124,16 @@ export default function About() {
           {/* Education + Interests */}
           <div className="lg:col-span-2 space-y-8">
             <div>
-              <h3 className="text-sm font-semibold text-slate-500 uppercase tracking-wider mb-4">Education</h3>
+              <h3 className="font-mono text-[11px] font-semibold text-text-dim uppercase tracking-[0.2em] mb-4">Education</h3>
               <div className="space-y-4">
                 {education.map((edu) => (
-                  <div key={edu.degree} className="border border-slate-800 rounded-xl p-4 bg-slate-900">
-                    <p className="font-semibold text-slate-100 text-sm leading-snug">{edu.degree}</p>
-                    <p className="text-slate-400 text-xs mt-1">{edu.school}</p>
-                    <p className="text-slate-500 text-xs">{edu.location}</p>
-                    <p className="text-blue-400 text-xs font-medium mt-1">{edu.period}</p>
+                  <div key={edu.degree} className="border border-line rounded-xl p-4 bg-ink-raised">
+                    <p className="font-semibold text-text-hi text-sm leading-snug">{edu.degree}</p>
+                    <p className="text-text text-xs mt-1">{edu.school}</p>
+                    <p className="text-text-dim text-xs">{edu.location}</p>
+                    <p className="font-mono text-copper text-xs font-medium mt-1">{edu.period}</p>
                     {edu.note && (
-                      <p className="text-slate-400 text-xs mt-2 leading-relaxed">{edu.note}</p>
+                      <p className="text-text text-xs mt-2 leading-relaxed">{edu.note}</p>
                     )}
                   </div>
                 ))}
@@ -141,11 +141,11 @@ export default function About() {
             </div>
 
             <div>
-              <h3 className="text-sm font-semibold text-slate-500 uppercase tracking-wider mb-4">Interests</h3>
+              <h3 className="font-mono text-[11px] font-semibold text-text-dim uppercase tracking-[0.2em] mb-4">Interests</h3>
               <ul className="space-y-2">
                 {interests.map((interest) => (
-                  <li key={interest} className="flex gap-2 text-sm text-slate-400">
-                    <span className="mt-2 w-1 h-1 rounded-full bg-blue-500 flex-shrink-0" />
+                  <li key={interest} className="flex gap-2 text-sm text-text">
+                    <span className="mt-2 w-1 h-1 rounded-full bg-copper flex-shrink-0" />
                     {interest}
                   </li>
                 ))}
