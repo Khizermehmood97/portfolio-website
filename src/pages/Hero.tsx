@@ -217,6 +217,16 @@ export default function Hero() {
               View My Work
             </a>
             <a
+              href="/resume.pdf"
+              download
+              className="px-5 py-2.5 border border-line text-text text-sm font-medium rounded-md hover:border-copper hover:text-copper transition-colors inline-flex items-center gap-2"
+            >
+              <svg width="15" height="15" fill="none" stroke="currentColor" strokeWidth="1.8" viewBox="0 0 24 24" aria-hidden="true">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v12m0 0l-4-4m4 4l4-4M4 20h16" />
+              </svg>
+              Download CV
+            </a>
+            <a
               href="#contact"
               onClick={(e) => { e.preventDefault(); smoothScrollToId('contact') }}
               className="px-5 py-2.5 border border-line text-text text-sm font-medium rounded-md hover:border-teal hover:text-teal transition-colors"
